@@ -9,3 +9,5 @@
 
 * Esse serviço rodará em cloud (aws) com uma máquina ec2 que está configurada para replicar a instância em caso de uso de 70% da cpu;
 
+* <img src="https://i.ibb.co/QQpJfjX/image.png" /> 
+
