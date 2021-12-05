@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,6 +46,7 @@ import io.swagger.annotations.Authorization;
 		@ApiResponse(code = 403, message = "Erro de autorização"),
 		@ApiResponse(code = 404, message = "Recurso não encontrado")}
 )
+@CrossOrigin(origins = "*", maxAge = 3600L)
 public class PrestadorController  {
 
 	@Autowired

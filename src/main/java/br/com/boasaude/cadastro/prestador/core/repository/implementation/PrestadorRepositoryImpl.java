@@ -3,6 +3,7 @@ package br.com.boasaude.cadastro.prestador.core.repository.implementation;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageRequest;
@@ -43,7 +44,6 @@ public class PrestadorRepositoryImpl implements PrestadorRepository {
 	@Override
 	public List<Prestador> capturarTodos(Paginador paginador) {
 		return capturarPrestadoresBD(paginador);
-		//return capturarPrestadoresFaker(paginador);
 	}
 
 	private List<Prestador> capturarPrestadoresBD(Paginador paginador) {
@@ -70,7 +70,17 @@ public class PrestadorRepositoryImpl implements PrestadorRepository {
 			return null;
 		}
 		Prestador prestador = new Prestador();
+		prestador.setId(prestadorJpa.getId());
 		prestador.setNome(prestadorJpa.getNome());
+		prestador.setCnpj(prestadorJpa.getCnpj());
+		prestador.setCpf(prestadorJpa.getCpf());
+		prestador.setRazaoSocial(prestadorJpa.getRazaoSocial());
+		if(new Random().nextInt(1) == 1) {
+			prestador.setTipo(TipoPrestador.FISICA);
+		}else {
+			prestador.setTipo(TipoPrestador.JURIDICA);
+		}
+		
 		return prestador;
 	}
 

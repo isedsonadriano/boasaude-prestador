@@ -30,7 +30,7 @@ public class App extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		Environment env = SpringApplication.run(App.class, args).getEnvironment();
 		log.info("Serviço de cadastro de prestadores Iniciado");
-        log.info("Documentação das APIs: http://localhost:{}/swagger-ui.html#//v1/prestadores", env.getProperty("server.port"));
+        log.info("Documentação das APIs: http://localhost:{}/swagger-ui.html#/v1/prestadores", env.getProperty("server.port"));
 	}
 
 }

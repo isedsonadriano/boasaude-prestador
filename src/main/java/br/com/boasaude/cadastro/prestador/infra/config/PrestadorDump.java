@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PrestadorDump {
 	
-	private static final int QUANTIDADE_PRESTADORES_DUMP = 1000;
+	private static final int QUANTIDADE_PRESTADORES_DUMP = 50;
 
 	@Autowired
 	private Faker faker;
