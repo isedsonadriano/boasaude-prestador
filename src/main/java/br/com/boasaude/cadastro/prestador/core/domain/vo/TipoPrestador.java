@@ -1,10 +1,15 @@
 package br.com.boasaude.cadastro.prestador.core.domain.vo;
 
+import java.util.Random;
+
 public enum TipoPrestador {
 
-	FISICA("F"),
-    JURIDICA("J"),
-    NAO_INFORMADO("X");
+	MEDICO("M"),
+    ENFEIMEIRO("E"),
+    NUTRICIONISTA("N"),
+    FISIOTERAPEUTA("F"),
+    DENTISTA("D"),
+    NAO_INFORMADO("NI");
 
     private String value;
 
@@ -24,6 +29,10 @@ public enum TipoPrestador {
              }
          }
          return NAO_INFORMADO;
+    }
+    
+    public static TipoPrestador getRandomTipoPrestador() {
+    	return values()[new Random().nextInt(4)];
     }
 }
 

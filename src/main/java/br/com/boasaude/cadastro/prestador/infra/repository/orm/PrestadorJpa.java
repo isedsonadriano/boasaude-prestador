@@ -1,6 +1,7 @@
 package br.com.boasaude.cadastro.prestador.infra.repository.orm;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +26,7 @@ public class PrestadorJpa {
 	private String cpf;
 
 	@NotNull
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	private TipoPrestador tipo;
 
 	@NotNull

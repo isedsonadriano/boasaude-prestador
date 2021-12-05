@@ -35,9 +35,8 @@ public class PrestadorRepositoryImpl implements PrestadorRepository {
 		PrestadorJpa prestadorJpa = repository.findById(id).get();
 		Prestador prestador = new Prestador();
 		prestador.setNome(prestadorJpa.getNome());
-		prestador.setCnpj(prestadorJpa.getCnpj());
 		prestador.setCpf(prestadorJpa.getCpf());
-		prestador.setTipo(TipoPrestador.FISICA);
+		prestador.setTipo(prestadorJpa.getTipo());
 		return prestador;
 	}
 
@@ -55,7 +54,7 @@ public class PrestadorRepositoryImpl implements PrestadorRepository {
 	public void atualizar(Prestador prestador) {
 		Optional<PrestadorJpa> prestadorJpa = this.repository.findById(prestador.getId());
 		if (prestadorJpa.isPresent()) {
-			prestadorJpa.get().setCnpj(prestador.getCnpj());
+			prestadorJpa.get().setCpf(prestador.getCpf());
 		}
 		this.repository.save(prestadorJpa.get());
 	}
@@ -72,25 +71,16 @@ public class PrestadorRepositoryImpl implements PrestadorRepository {
 		Prestador prestador = new Prestador();
 		prestador.setId(prestadorJpa.getId());
 		prestador.setNome(prestadorJpa.getNome());
-		prestador.setCnpj(prestadorJpa.getCnpj());
 		prestador.setCpf(prestadorJpa.getCpf());
-		prestador.setRazaoSocial(prestadorJpa.getRazaoSocial());
-		if(new Random().nextInt(1) == 1) {
-			prestador.setTipo(TipoPrestador.FISICA);
-		}else {
-			prestador.setTipo(TipoPrestador.JURIDICA);
-		}
-		
+		prestador.setTipo(TipoPrestador.getRandomTipoPrestador());
 		return prestador;
 	}
 
 	private PrestadorJpa buildPrestadorJpa(Prestador prestador) {
 		PrestadorJpa prestadorJpa = new PrestadorJpa();
 		prestadorJpa.setNome(prestador.getNome());
-		prestadorJpa.setCnpj(prestador.getCnpj());
 		prestadorJpa.setCpf(prestador.getCpf());
-		prestadorJpa.setRazaoSocial(prestador.getRazaoSocial());
-		prestadorJpa.setTipo(TipoPrestador.FISICA);
+		prestadorJpa.setTipo(prestador.getTipo());
 		return prestadorJpa;
 	}
 

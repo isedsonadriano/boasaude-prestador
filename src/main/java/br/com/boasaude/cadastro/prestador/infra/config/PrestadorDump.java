@@ -44,10 +44,8 @@ public class PrestadorDump {
 			Prestador prestador = new Prestador();
 			prestador.setId(faker.random().nextLong());
 			prestador.setNome(faker.company().name());
-			prestador.setRazaoSocial(prestador.getNome());
-			prestador.setTipo(TipoPrestador.JURIDICA);
+			prestador.setTipo(TipoPrestador.getRandomTipoPrestador());
 			prestador.setCpf(String.valueOf(faker.random().nextLong()));
-			prestador.setCnpj(String.valueOf(faker.random().nextLong()));
 			
 			this.prestadorService.salvar(prestador);
 		}
