@@ -6,12 +6,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import br.com.boasaude.cadastro.prestador.core.domain.vo.TipoPrestador;
 
 
 @Entity
+@Table(name = "boasaude_prestador")
 public class PrestadorJpa {
 
 	@Id
@@ -21,16 +23,12 @@ public class PrestadorJpa {
 	@NotNull
 	private String nome;
 
-	private String cnpj;
-
+	@NotNull
 	private String cpf;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private TipoPrestador tipo;
-
-	@NotNull
-	private String razaoSocial;
 
 	public Long getId() {
 		return id;
@@ -46,14 +44,6 @@ public class PrestadorJpa {
 
 	public void setNome(String name) {
 		this.nome = name;
-	}
-
-	public String getCnpj() {
-		return cnpj;
-	}
-
-	public void setCnpj(String user) {
-		this.cnpj = user;
 	}
 
 	public String getCpf() {
@@ -72,11 +62,4 @@ public class PrestadorJpa {
 		this.tipo = gender;
 	}
 
-	public String getRazaoSocial() {
-		return razaoSocial;
-	}
-
-	public void setRazaoSocial(String razaoSocial) {
-		this.razaoSocial = razaoSocial;
-	}
 }

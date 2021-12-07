@@ -1,34 +1,39 @@
 package br.com.boasaude.cadastro.prestador.infra.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 
-import com.github.javafaker.Faker;
-
 import br.com.boasaude.cadastro.prestador.core.domain.entity.Prestador;
-import br.com.boasaude.cadastro.prestador.core.domain.vo.TipoPrestador;
 import br.com.boasaude.cadastro.prestador.core.service.PrestadorService;
 import br.com.boasaude.cadastro.prestador.core.util.Paginador;
+import br.com.boasaude.cadastro.prestador.integration.ConsultaPrestadores;
+import br.com.boasaude.cadastro.prestador.integration.dto.PrestadorDTO;
+import br.com.boasaude.cadastro.prestador.integration.dto.PrestadoresDTO;
 import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @Slf4j
 public class PrestadorDump {
 	
-	private static final int QUANTIDADE_PRESTADORES_DUMP = 50;
-
-	@Autowired
-	private Faker faker;
 	
 	@Autowired
 	private PrestadorService prestadorService;
 	
+	@Autowired
+	private ConsultaPrestadores consultaPrestadores;
+	
+	@Autowired
+	protected ModelMapper modelMapper;
+	
+	
 	@EventListener(classes = ContextRefreshedEvent.class )
 	public void iniciarBancoDeDados () {
 		log.info("Início inserção prestadores");
-		if(isBancoVazio()) {
+		if(true) {
+		//if(isBancoVazio()) {
 			inserirPrestadoresDb();
 		}
 		
@@ -40,13 +45,9 @@ public class PrestadorDump {
 	}
 
 	private void inserirPrestadoresDb() {
-		for (int i = 0; i < QUANTIDADE_PRESTADORES_DUMP; i++) {
-			Prestador prestador = new Prestador();
-			prestador.setId(faker.random().nextLong());
-			prestador.setNome(faker.company().name());
-			prestador.setTipo(TipoPrestador.getRandomTipoPrestador());
-			prestador.setCpf(String.valueOf(faker.random().nextLong()));
-			
+		PrestadoresDTO prestadores = consultaPrestadores.consulta();
+		for (PrestadorDTO prestadorDTO : prestadores.getPrestadores()) {
+			Prestador prestador = this.modelMapper.map(prestadorDTO, Prestador.class);
 			this.prestadorService.salvar(prestador);
 		}
 	}
