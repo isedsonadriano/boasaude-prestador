@@ -7,6 +7,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 
 import br.com.boasaude.cadastro.prestador.core.domain.entity.Prestador;
+import br.com.boasaude.cadastro.prestador.core.domain.vo.TipoPrestador;
 import br.com.boasaude.cadastro.prestador.core.service.PrestadorService;
 import br.com.boasaude.cadastro.prestador.core.util.Paginador;
 import br.com.boasaude.cadastro.prestador.integration.ConsultaPrestadores;
@@ -32,11 +33,9 @@ public class PrestadorDump {
 	@EventListener(classes = ContextRefreshedEvent.class )
 	public void iniciarBancoDeDados () {
 		log.info("Início inserção prestadores");
-		if(true) {
-		//if(isBancoVazio()) {
+		if(isBancoVazio()) {
 			inserirPrestadoresDb();
 		}
-		
 		log.info("Fim inserção prestadores");
 	}
 
@@ -46,8 +45,12 @@ public class PrestadorDump {
 
 	private void inserirPrestadoresDb() {
 		PrestadoresDTO prestadores = consultaPrestadores.consulta();
-		for (PrestadorDTO prestadorDTO : prestadores.getPrestadores()) {
-			Prestador prestador = this.modelMapper.map(prestadorDTO, Prestador.class);
+		for (PrestadorDTO dto : prestadores.getPrestadores()) {
+			Prestador prestador = new Prestador();
+			prestador.setCpf(dto.getCpf());
+			prestador.setId(dto.getId());
+			prestador.setNome(dto.getNome());
+			prestador.setTipo(TipoPrestador.MEDICO);
 			this.prestadorService.salvar(prestador);
 		}
 	}
