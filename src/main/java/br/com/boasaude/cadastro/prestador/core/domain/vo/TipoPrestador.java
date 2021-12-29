@@ -5,13 +5,16 @@ import java.util.Random;
 public enum TipoPrestador {
 
 	MEDICO("M"),
-    ENFEIMEIRO("E"),
+    ENFERMEIRO("E"),
     NUTRICIONISTA("N"),
     FISIOTERAPEUTA("F"),
     DENTISTA("D"),
     NAO_INFORMADO("NI");
 
     private String value;
+
+    @Deprecated
+    TipoPrestador() {}
 
      TipoPrestador(String value){
         this.value = value;

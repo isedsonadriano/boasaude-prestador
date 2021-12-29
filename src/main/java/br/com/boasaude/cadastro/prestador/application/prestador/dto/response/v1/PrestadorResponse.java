@@ -31,5 +31,7 @@ public class PrestadorResponse {
 	@ApiModelProperty(notes = "Razao Social do prestador",name="razaoSocial",required=true,value="Teste Razao social")
 	private String razaoSocial;
 
+	@ApiModelProperty(notes = "Tipo do prestador",name="razaoSocial",required=true,value="Teste Tipo prestador")
+	private String tipo;
 
 }

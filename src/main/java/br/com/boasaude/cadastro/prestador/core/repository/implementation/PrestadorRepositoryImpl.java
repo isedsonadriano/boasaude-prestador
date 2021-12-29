@@ -46,7 +46,7 @@ public class PrestadorRepositoryImpl implements PrestadorRepository {
 	}
 
 	private List<Prestador> capturarPrestadoresBD(Paginador paginador) {
-		PageRequest paginaRetorno =   PageRequest.of(paginador.getPageNumber(), paginador.getPageSize(), Sort.by("id"));
+		PageRequest paginaRetorno =   PageRequest.of(paginador.getPageNumber(), paginador.getPageSize(), Sort.by("id").descending());
 		return repository.findAll(paginaRetorno).get().map(this::buildPrestador).collect(Collectors.toList());
 	}
 
@@ -72,7 +72,7 @@ public class PrestadorRepositoryImpl implements PrestadorRepository {
 		prestador.setId(prestadorJpa.getId());
 		prestador.setNome(prestadorJpa.getNome());
 		prestador.setCpf(prestadorJpa.getCpf());
-		prestador.setTipo(TipoPrestador.getRandomTipoPrestador());
+		prestador.setTipo(prestadorJpa.getTipo());
 		return prestador;
 	}
 
