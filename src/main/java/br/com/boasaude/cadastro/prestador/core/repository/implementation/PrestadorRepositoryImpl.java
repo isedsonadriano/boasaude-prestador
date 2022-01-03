@@ -34,6 +34,7 @@ public class PrestadorRepositoryImpl implements PrestadorRepository {
 	public Prestador capturarPorId(Long id) {
 		PrestadorJpa prestadorJpa = repository.findById(id).get();
 		Prestador prestador = new Prestador();
+		prestador.setId(prestadorJpa.getId());
 		prestador.setNome(prestadorJpa.getNome());
 		prestador.setCpf(prestadorJpa.getCpf());
 		prestador.setTipo(prestadorJpa.getTipo());
@@ -52,11 +53,16 @@ public class PrestadorRepositoryImpl implements PrestadorRepository {
 
 	@Override
 	public void atualizar(Prestador prestador) {
-		Optional<PrestadorJpa> prestadorJpa = this.repository.findById(prestador.getId());
-		if (prestadorJpa.isPresent()) {
-			prestadorJpa.get().setCpf(prestador.getCpf());
+		Optional<PrestadorJpa> prestadorJpaOpt = this.repository.findById(prestador.getId());
+		if (prestadorJpaOpt.isPresent()) {
+			PrestadorJpa prestadorJpa = prestadorJpaOpt.get();
+			prestadorJpa.setCpf(prestador.getCpf());
+			prestadorJpa.setNome(prestador.getNome());
+			prestadorJpa.setTipo(prestador.getTipo());
+			
+			this.repository.save(prestadorJpa);
 		}
-		this.repository.save(prestadorJpa.get());
+		
 	}
 
 	@Override
