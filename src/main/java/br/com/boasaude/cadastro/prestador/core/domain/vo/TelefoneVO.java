@@ -4,6 +4,14 @@ public class TelefoneVO {
 
 	private String numeroCompleto;
 
+	public TelefoneVO(String telefone) {
+		this.numeroCompleto = telefone;
+	}
+	
+	@Deprecated
+	public TelefoneVO() {
+	}
+
 	public String getNumeroCompleto() {
 		return numeroCompleto;
 	}

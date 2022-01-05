@@ -1,5 +1,6 @@
 package br.com.boasaude.cadastro.prestador.infra.repository.orm;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -9,9 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import br.com.boasaude.cadastro.prestador.core.domain.enums.Status;
+import br.com.boasaude.cadastro.prestador.core.domain.vo.ConselhoProfissional;
+import br.com.boasaude.cadastro.prestador.core.domain.vo.TelefoneVO;
 import br.com.boasaude.cadastro.prestador.core.domain.vo.TipoPrestador;
+import lombok.Getter;
+import lombok.Setter;
 
-
+@Getter
+@Setter
 @Entity
 @Table(name = "boasaude_prestador")
 public class PrestadorJpa {
@@ -30,36 +37,20 @@ public class PrestadorJpa {
 	@Enumerated(EnumType.STRING)
 	private TipoPrestador tipo;
 
-	public Long getId() {
-		return id;
-	}
+	@NotNull
+	@Embedded
+	private TelefoneVO telefone;
+	
+	@Enumerated(EnumType.STRING)
+	private Status status;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	@Enumerated(EnumType.STRING)
+	private ConselhoProfissional conselho;
 
-	public String getNome() {
-		return nome;
-	}
+	private String numeroNoConselho;
 
-	public void setNome(String name) {
-		this.nome = name;
-	}
+	private String cbos;
 
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String password) {
-		this.cpf = password;
-	}
-
-	public TipoPrestador getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoPrestador gender) {
-		this.tipo = gender;
-	}
+	private String cnes;
 
 }

@@ -28,6 +28,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.boasaude.cadastro.prestador.application.prestador.dto.request.v1.PrestadorRequest;
 import br.com.boasaude.cadastro.prestador.application.prestador.dto.response.v1.PrestadorResponse;
+import br.com.boasaude.cadastro.prestador.application.prestador.mapper.PrestadorMapper;
 import br.com.boasaude.cadastro.prestador.core.domain.entity.Prestador;
 import br.com.boasaude.cadastro.prestador.core.service.PrestadorService;
 import br.com.boasaude.cadastro.prestador.core.util.Paginador;
@@ -54,18 +55,17 @@ public class PrestadorController  {
 	
 	@Autowired
 	protected ModelMapper modelMapper;
-
 	
 	@ApiOperation(value = "API para salvar um prestador", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<PrestadorResponse> salvar(@RequestBody @Valid PrestadorRequest prestadorRequest, UriComponentsBuilder uriBuilder) {
-		Prestador prestador = buildPrestador(prestadorRequest);
+		Prestador prestador = PrestadorMapper.prestadorRequestToPrestador(prestadorRequest);
 		this.service.salvar(prestador);
 		URI uri = uriBuilder.path("{id}").buildAndExpand(prestador.getId()).toUri();
 		return ResponseEntity.created(uri).body(buildPrestadorResponse(prestador));
 	}
-	
+
 	@ApiOperation(value = "API para listar prestadores", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@GetMapping
 	@ResponseBody
@@ -80,7 +80,7 @@ public class PrestadorController  {
 	public ResponseEntity<PrestadorResponse> catpurar(@PathVariable Long id) {
 		Prestador prestador = service.capturarPorId(id);
 		if (Objects.nonNull(prestador)) {
-			return ResponseEntity.ok(buildPrestadorResponse(prestador));
+			return ResponseEntity.ok(PrestadorMapper.prestadorToPrestadorResponse(prestador));
 		}
 		return ResponseEntity.notFound().build();
 	}
@@ -89,7 +89,7 @@ public class PrestadorController  {
 	@PutMapping("/{id}")
 	@ResponseBody
 	public ResponseEntity<PrestadorResponse> atualizar(@PathVariable Long id, @RequestBody @Valid PrestadorRequest prestadorRequest, UriComponentsBuilder uriBuilder) {
-		Prestador prestador = buildPrestador(prestadorRequest);
+		Prestador prestador = PrestadorMapper.prestadorRequestToPrestador(prestadorRequest);
 		prestador.setId(id);
 		this.service.atualizar(prestador);
 		return ResponseEntity.ok(buildPrestadorResponse(prestador));

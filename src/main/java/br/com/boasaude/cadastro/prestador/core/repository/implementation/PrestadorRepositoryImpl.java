@@ -3,14 +3,13 @@ package br.com.boasaude.cadastro.prestador.core.repository.implementation;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
+import br.com.boasaude.cadastro.prestador.application.prestador.mapper.PrestadorMapper;
 import br.com.boasaude.cadastro.prestador.core.domain.entity.Prestador;
-import br.com.boasaude.cadastro.prestador.core.domain.vo.TipoPrestador;
 import br.com.boasaude.cadastro.prestador.core.repository.PrestadorRepository;
 import br.com.boasaude.cadastro.prestador.core.util.Paginador;
 import br.com.boasaude.cadastro.prestador.infra.repository.PrestadorRepositoryMySql;
@@ -33,12 +32,7 @@ public class PrestadorRepositoryImpl implements PrestadorRepository {
 	@Override
 	public Prestador capturarPorId(Long id) {
 		PrestadorJpa prestadorJpa = repository.findById(id).get();
-		Prestador prestador = new Prestador();
-		prestador.setId(prestadorJpa.getId());
-		prestador.setNome(prestadorJpa.getNome());
-		prestador.setCpf(prestadorJpa.getCpf());
-		prestador.setTipo(prestadorJpa.getTipo());
-		return prestador;
+		return PrestadorMapper.prestadorJpaToPrestador(prestadorJpa);
 	}
 
 	@Override
@@ -59,6 +53,12 @@ public class PrestadorRepositoryImpl implements PrestadorRepository {
 			prestadorJpa.setCpf(prestador.getCpf());
 			prestadorJpa.setNome(prestador.getNome());
 			prestadorJpa.setTipo(prestador.getTipo());
+			prestadorJpa.setCbos(prestador.getCbos());
+			prestadorJpa.setCnes(prestador.getCnes());
+			prestadorJpa.setConselho(prestador.getConselho());
+			prestadorJpa.setNumeroNoConselho(prestador.getNumeroNoConselho());
+			prestadorJpa.setStatus(prestador.getStatus());
+			prestadorJpa.setTelefone(prestador.getTelefone());
 			
 			this.repository.save(prestadorJpa);
 		}
@@ -83,11 +83,7 @@ public class PrestadorRepositoryImpl implements PrestadorRepository {
 	}
 
 	private PrestadorJpa buildPrestadorJpa(Prestador prestador) {
-		PrestadorJpa prestadorJpa = new PrestadorJpa();
-		prestadorJpa.setNome(prestador.getNome());
-		prestadorJpa.setCpf(prestador.getCpf());
-		prestadorJpa.setTipo(prestador.getTipo());
-		return prestadorJpa;
+		return PrestadorMapper.prestadorToPrestadorJpa(prestador);
 	}
 
 	@Override
