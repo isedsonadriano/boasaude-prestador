@@ -74,12 +74,7 @@ public class PrestadorRepositoryImpl implements PrestadorRepository {
 		if(Objects.isNull(prestadorJpa)) {
 			return null;
 		}
-		Prestador prestador = new Prestador();
-		prestador.setId(prestadorJpa.getId());
-		prestador.setNome(prestadorJpa.getNome());
-		prestador.setCpf(prestadorJpa.getCpf());
-		prestador.setTipo(prestadorJpa.getTipo());
-		return prestador;
+		return PrestadorMapper.prestadorJpaToPrestador(prestadorJpa);
 	}
 
 	private PrestadorJpa buildPrestadorJpa(Prestador prestador) {

@@ -106,9 +106,5 @@ public class PrestadorController  {
 	private PrestadorResponse buildPrestadorResponse(Prestador prestador) {
 		return modelMapper.map(prestador, PrestadorResponse.class);
 	}
-	
-	private Prestador buildPrestador(PrestadorRequest prestadorRequest) {
-		return modelMapper.map(prestadorRequest, Prestador.class);
-	}
 
 }
